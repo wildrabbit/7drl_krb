@@ -10,12 +10,6 @@ public class KrbGameController : GameController
         base.Awake();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     protected override IMapController CreateMapController()
     {
         IMapController mapController = Instantiate<KrbMapController>(_mapControllerPrefab);

@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6744e2c828d03db41971d12b0d7b9bcf, type: 3}
   m_Name: KrbFlyingTrait
   m_EditorClassIdentifier: 
-  AllowedTypes: 0300000002000000
+  AllowedTypes: 0100000002000000

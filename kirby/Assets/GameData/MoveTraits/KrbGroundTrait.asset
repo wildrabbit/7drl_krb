@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6744e2c828d03db41971d12b0d7b9bcf, type: 3}
   m_Name: KrbGroundTrait
   m_EditorClassIdentifier: 
-  AllowedTypes: 03000000
+  AllowedTypes: 01000000

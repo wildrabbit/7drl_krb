@@ -1,15 +1,12 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
 public enum KrbTileType
 {
-    None = 0,
-    Wall,
-    Water,
-    Ground // ??
+    None = -1,
+    Wall = 0,
+    Ground,
+    Water
 }
 
 [CreateAssetMenu(fileName = "New KrbTile", menuName = "KRB_RL/Tile")]
@@ -23,4 +20,3 @@ public class KrbTile : Tile
     [SerializeField] bool _walkable;
     [SerializeField] bool _impassable;
 }
-

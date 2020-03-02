@@ -35,6 +35,6 @@ MonoBehaviour:
   m_InstancedGameObject: {fileID: 0}
   m_Flags: 1
   m_ColliderType: 1
-  _tile: 0
+  _tile: -1
   _walkable: 0
   _impassable: 1

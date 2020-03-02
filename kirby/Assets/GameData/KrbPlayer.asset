@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 75bc2b31d5e57dc468ec9e150ccee7d1, type: 3}
   m_Name: KrbPlayer
   m_EditorClassIdentifier: 
-  DefaultViewPrefab: {fileID: 2798364246931441843, guid: 8eb2a6adf8496274c9159a5ba81e532f,
+  DefaultViewPrefab: {fileID: 2798364246931441843, guid: 5fd9923b272dadf4a958259bd6cee733,
     type: 3}
   DisplayName: You
   CanMoveIntoMonsterCoords: 1

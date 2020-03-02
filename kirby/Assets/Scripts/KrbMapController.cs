@@ -9,8 +9,18 @@ public class KrbMapController : MonoBehaviour, IMapController
 {
     public Vector2Int PlayerStart => _playerStart;
     [SerializeField] Tilemap _mapView;
+
+
+    public BoundsInt CellBounds => _mapView.cellBounds;
+
+    public int Height => _mapView.size.x;
+    public int Width => _mapView.size.y;
+
     KrbMapData _mapData;
     RectGridMap _mapHelper;
+
+    Dictionary<KrbTileType, KrbTile> _palette;
+
 
     Vector2Int _playerStart;
 
@@ -26,8 +36,6 @@ public class KrbMapController : MonoBehaviour, IMapController
         }
     }
 
-    public BoundsInt CellBounds => _mapView.cellBounds;
-
     public void Cleanup()
     {
         _mapView.ClearAllTiles();
@@ -36,7 +44,7 @@ public class KrbMapController : MonoBehaviour, IMapController
     public void Init(BaseMapData mapData)
     {
         _mapData = (KrbMapData)mapData;
-        _mapHelper = new RectGridMap(_mapData.DistanceStrategy);
+        _mapHelper = new RectGridMap(_mapData.DistanceStrategy); // Instantiate selectively from data
 
         _palette = new Dictionary<KrbTileType, KrbTile>();
         foreach (var entry in _mapData.Palette)
@@ -72,19 +80,6 @@ public class KrbMapController : MonoBehaviour, IMapController
         return (KrbTile)GetTileAt(coords);
     }
 
-    Dictionary<KrbTileType, KrbTile> _palette;
-    public KrbTile NoTile => null;
-
-
-    // We'll start with neutral, then N and then clockwise
-    Vector2Int[][] _neighbourOffsets = new Vector2Int[][]
-    {
-        new Vector2Int[]{ new Vector2Int(0, 0), new Vector2Int(1, 0), new Vector2Int(0, 1), new Vector2Int(-1,1), new Vector2Int(-1, 0), new Vector2Int(-1, -1), new Vector2Int(0, -1)},
-        new Vector2Int[]{ new Vector2Int(0, 0), new Vector2Int(1, 0), new Vector2Int(1, 1),new Vector2Int(0, 1), new Vector2Int(-1, 0), new Vector2Int(0, -1),new Vector2Int(1, -1)}
-    };
-
-    public int Height => _mapView.size.x;
-    public int Width => _mapView.size.y;
 
     public bool HasTile(Vector3Int pos)
     {
@@ -131,6 +126,10 @@ public class KrbMapController : MonoBehaviour, IMapController
             mapContext.GeneratorData = _mapData.GenerationData;
 
             FixedMapGeneratorData genData = ((FixedMapGeneratorData)_mapData.GenerationData);
+            if(!genData.BuildLevelData())
+            {
+                return;
+            }
             InitFromArray(genData.MapSize, genData.LevelData, genData.PlayerStart, genData.OriginIsTopLeft);
         }
         else if (_mapData.GenerationData.GeneratorType == GeneratorType.BSP)
@@ -172,7 +171,7 @@ public class KrbMapController : MonoBehaviour, IMapController
     public List<Vector2Int> GetWalkableNeighbours(Vector2Int coords)
     {
         List<Vector2Int> neighbours = new List<Vector2Int>();
-        Vector2Int[] offsets = _neighbourOffsets[coords.y & 1];
+        Vector2Int[] offsets = _mapHelper.GetOffsets(coords);
         for (int i = 1; i < offsets.Length; ++i)
         {
             Vector2Int neighbourCoords = coords + offsets[i];
@@ -196,7 +195,7 @@ public class KrbMapController : MonoBehaviour, IMapController
 
     public Vector3 WorldFromCoords(Vector2Int coords)
     {
-        return _mapView.CellToWorld((Vector3Int)coords);
+        return _mapView.GetCellCenterWorld((Vector3Int)coords);
     }
 
     public Vector2Int CoordsFromWorld(Vector2 pos)
@@ -244,8 +243,7 @@ public class KrbMapController : MonoBehaviour, IMapController
             foreach (var curReference in pending)
             {
                 candidates.Add(curReference);
-                bool isEven = curReference.y % 2 == 0;
-                Vector2Int[] offsets = _neighbourOffsets[isEven ? 0 : 1];
+                Vector2Int[] offsets = _mapHelper.GetOffsets(curReference);
                 // TODO: OPTIMIZATION: Make offsets dependent on the lookup direction
                 foreach (var offset in offsets)
                 {
@@ -277,7 +275,7 @@ public class KrbMapController : MonoBehaviour, IMapController
 
     public void GetNeighbourDeltas(Vector2Int currentCoords, out Vector2Int[] offsets)
     {
-        var source = _neighbourOffsets[currentCoords.y & 1];
+        var source = _mapHelper.GetOffsets(currentCoords);
         int deltasLen = source.Length - 1;
         offsets = new Vector2Int[deltasLen];
         Array.Copy(source, 1, offsets, 0, deltasLen);

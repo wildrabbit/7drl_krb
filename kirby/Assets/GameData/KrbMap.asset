@@ -15,5 +15,6 @@ MonoBehaviour:
   Palette:
   - {fileID: 11400000, guid: eca604e9addef2945b23cd57f3bc88e7, type: 2}
   - {fileID: 11400000, guid: 2a5db9a291141ca458e9f24bf3c2d4c6, type: 2}
-  GenerationData: {fileID: 11400000, guid: 73596ccfd8588d04390b018137e16029, type: 2}
+  - {fileID: 11400000, guid: 83f11a25a717cdd4aaf64136b3a3db61, type: 2}
+  GenerationData: {fileID: 11400000, guid: f9c3e3d7f35c4b345a032ec9d165fe6a, type: 2}
   DistanceStrategy: 0
