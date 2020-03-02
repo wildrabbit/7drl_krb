@@ -35,4 +35,9 @@ public class KrbGameController : GameController
     {
         return new KrbInputController();
     }
+
+    protected override PlayerActionState CreatePlayerActionState()
+    {
+        return new KrbPlayerActionState();
+    }
 }
