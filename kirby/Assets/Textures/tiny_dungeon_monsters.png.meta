@@ -1,5 +1,7 @@
 fileFormatVersion: 2
 guid: 2d67567fad27ab44ea73ca232b03b15a
+labels:
+- MonsterSprites
 TextureImporter:
   internalIDToNameTable:
   - first:

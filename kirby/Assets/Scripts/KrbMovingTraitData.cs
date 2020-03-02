@@ -10,4 +10,13 @@ public class KrbMovingTraitData : BaseMovingTraitData
     {
         return new KrbMovingTrait();
     }
+
+    public override bool MatchesTile(TileBase t)
+    {
+        if(t is KrbTile krbTile)
+        {
+            return System.Array.IndexOf(AllowedTypes, krbTile.TileType) >= 0;
+        }
+        return false;
+    }
 }

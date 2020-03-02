@@ -1,5 +1,7 @@
 fileFormatVersion: 2
 guid: f509bde8a7b89ef4e869a4964f9fac83
+labels:
+- WorldSprites
 TextureImporter:
   internalIDToNameTable:
   - first:

@@ -18,3 +18,15 @@ MonoBehaviour:
   OriginIsTopLeft: 1
   PlayerStart: {x: 4, y: 5}
   MapInfo: {fileID: 4900000, guid: 01b9cd69951eb0847a5e61fb694a4b2d, type: 3}
+  MonsterSpawns:
+  - Coords: {x: 7, y: 2}
+    Monster: {fileID: 11400000, guid: 3da6ef5f82555814c915cc595d1aae95, type: 2}
+    SpawnTags: []
+    MinAmount: 1
+    MaxAmount: 2
+    Scatter: 1
+    Respawnable: 0
+    MaxRespawns: 0
+    RespawnDelayTimeUnits: 0
+    ActivatesByDistance: 0
+    PlayerDistance: 0

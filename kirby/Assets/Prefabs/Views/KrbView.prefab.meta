@@ -1,5 +1,7 @@
 fileFormatVersion: 2
 guid: 5fd9923b272dadf4a958259bd6cee733
+labels:
+- EntityView
 PrefabImporter:
   externalObjects: {}
   userData: 

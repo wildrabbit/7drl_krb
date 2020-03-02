@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class KrbGameController : GameController
 {
@@ -24,6 +25,11 @@ public class KrbGameController : GameController
         //_eventLog.EndSession(evt);
 
         return GameResult.Running;
+    }
+
+    protected override List<MonsterSpawnData> FetchMonsterSpawnPoints()
+    {
+        return ((KrbMapController)_mapController).MonsterSpawns;
     }
 
     protected override BaseGameEvents CreateGameEvents()

@@ -26,5 +26,5 @@ MonoBehaviour:
   MinAreaSize: {x: 5, y: 5}
   MinRoomSize: {x: 2, y: 2}
   MaxRoomSize: {x: 4, y: 4}
-  IsSeeded: 0
-  Seed: 
+  IsSeeded: 1
+  Seed: '{"s0":-169501759,"s1":1104103121,"s2":-156410444,"s3":-164430039}'

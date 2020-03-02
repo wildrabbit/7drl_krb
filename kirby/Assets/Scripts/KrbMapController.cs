@@ -52,7 +52,6 @@ public class KrbMapController : MonoBehaviour, IMapController
             var castTile = (KrbTile)entry;
             _palette.Add(castTile.TileType, castTile);
         }
-        BuildMap();
     }
 
     public int Distance(Vector2Int from, Vector2Int to)
@@ -122,8 +121,10 @@ public class KrbMapController : MonoBehaviour, IMapController
     {
         if (_mapData.GenerationData.GeneratorType == GeneratorType.Fixed)
         {
-            BaseMapContext mapContext = new BaseMapContext();
-            mapContext.GeneratorData = _mapData.GenerationData;
+            BaseMapContext mapContext = new BaseMapContext
+            {
+                GeneratorData = _mapData.GenerationData
+            };
 
             FixedMapGeneratorData genData = ((FixedMapGeneratorData)_mapData.GenerationData);
             if(!genData.BuildLevelData())
@@ -134,9 +135,11 @@ public class KrbMapController : MonoBehaviour, IMapController
         }
         else if (_mapData.GenerationData.GeneratorType == GeneratorType.BSP)
         {
-            BSPContext context = new BSPContext();
-            context.GeneratorData = _mapData.GenerationData;
-            context.PlayerStart = Vector2Int.zero;
+            BSPContext context = new BSPContext
+            {
+                GeneratorData = _mapData.GenerationData,
+                PlayerStart = Vector2Int.zero
+            };
             int[] level = null;
             IMapGenerator generator = new BSPMapGenerator();
             generator.GenerateMap(ref level, context);
@@ -283,5 +286,35 @@ public class KrbMapController : MonoBehaviour, IMapController
         int deltasLen = source.Length - 1;
         offsets = new Vector2Int[deltasLen];
         Array.Copy(source, 1, offsets, 0, deltasLen);
+    }
+
+    public void GetRandomOffsets(Vector2Int refCoords, int scatterLimitRadius, ref Vector2Int[] coordList, bool firstIsRef, Predicate<Vector2Int> exclusionCheck = null)
+    {
+        int startIdx = firstIsRef ? 1 : 0;
+        var nearbyCoords = GetNearbyCoords(refCoords, scatterLimitRadius);
+        nearbyCoords.RemoveAll(exclusionCheck);
+
+        for(int i = startIdx; i < coordList.Length; ++i)
+        {
+            if(nearbyCoords.Count == 0)
+            {
+                break;
+            }
+            int idx = UnityEngine.Random.Range(0, nearbyCoords.Count - 1);
+            coordList[i] = nearbyCoords[idx];
+            nearbyCoords.RemoveAt(idx);
+        }
+    }
+
+    public List<MonsterSpawnData> MonsterSpawns
+    {
+        get
+        {
+            if (_mapData.GenerationData is FixedMapGeneratorData fixedMapData)
+            {
+                return fixedMapData.MonsterSpawns;
+            }
+            return null;
+        }
     }
 }
