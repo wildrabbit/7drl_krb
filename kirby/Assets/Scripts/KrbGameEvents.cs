@@ -5,7 +5,10 @@ using UnityEngine;
 
 public class KrbGameEvents: BaseGameEvents
 {
-    //.....
+    public KrbGameEvents():base()
+    {
+
+    }
 }
 
 public class PlayerItemEvent : BaseEvent

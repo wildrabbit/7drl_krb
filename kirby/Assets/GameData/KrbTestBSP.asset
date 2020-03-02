@@ -16,7 +16,7 @@ MonoBehaviour:
   GroundTile: 1
   NoTile: -1
   OriginIsTopLeft: 1
-  _mapSize: {x: 31, y: 47}
+  _mapSize: {x: 21, y: 27}
   PatternRoomsChance: 0.35
   PatternsFile: {fileID: 4900000, guid: 5a319297daca7d340b886d632c06d124, type: 3}
   HorizontalSplitChance: 0.5
@@ -25,6 +25,6 @@ MonoBehaviour:
   EmptyRoomChance: 0.05
   MinAreaSize: {x: 5, y: 5}
   MinRoomSize: {x: 2, y: 2}
-  MaxRoomSize: {x: 5, y: 5}
+  MaxRoomSize: {x: 4, y: 4}
   IsSeeded: 0
   Seed: 

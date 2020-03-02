@@ -157,6 +157,10 @@ public class KrbMapController : MonoBehaviour, IMapController
         }
 
         _playerStart = playerStart;
+        if(arrayOriginTopLeft)
+        {
+            _playerStart.x = height - (_playerStart.x + 1);
+        }
         for (int row = 0; row < height; ++row)
         {
             for (int col = 0; col < width; ++col)
