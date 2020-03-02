@@ -15,6 +15,6 @@ MonoBehaviour:
   InputDelay: 0.25
   DefaultTimescale: 1
   BumpingWallsWillSpendTurn: 0
-  MapData: {fileID: 11400000, guid: b5dabe65a62cc4c429e761a2759a6b72, type: 2}
+  MapData: {fileID: 11400000, guid: 25015260c3c870242bc1d922a5c78ae6, type: 2}
   EntityCreationData: {fileID: 11400000, guid: 279709ba767fe644fbbb589a0189103f, type: 2}
   InputData: {fileID: 11400000, guid: e78e36817e272f942992e49bf83b22cc, type: 2}

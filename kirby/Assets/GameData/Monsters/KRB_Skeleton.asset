@@ -15,7 +15,7 @@ MonoBehaviour:
   DefaultViewPrefab: {fileID: 588421280417342936, guid: 176adf3b71b1c1841ab7b6508b55b5af,
     type: 3}
   DisplayName: Skeleton
-  ThinkingDelay: 2
+  ThinkingDelay: 1
   HPData:
     MaxHP: 20
     StartHP: 20
@@ -23,7 +23,8 @@ MonoBehaviour:
     RegenRate: 0
     RegenAmount: 0
   MovingTraitData: {fileID: 11400000, guid: 0a7c3666a3cd6d14f81fba0ae6696f43, type: 2}
-  InitialState: 0
+  InitialState: {fileID: 11400000, guid: 2f92746e2ab6932479a3801c28f5937c, type: 2}
+  NoState: {fileID: 11400000, guid: a02f06426780a554c9fbb747fec28d29, type: 2}
   userTags: []
   WanderToIdleMinTurns: 10
   WanderToIdleMaxTurns: 20

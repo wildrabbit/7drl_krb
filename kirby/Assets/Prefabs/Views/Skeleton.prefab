@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 588421280417342936}
   - component: {fileID: 1696587325844992709}
   m_Layer: 0
-  m_Name: BatMonster
+  m_Name: Skeleton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -69,7 +69,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 796383053
   m_SortingLayer: 3
-  m_SortingOrder: 3
+  m_SortingOrder: 1
   m_Sprite: {fileID: 5517564002662157647, guid: 2d67567fad27ab44ea73ca232b03b15a,
     type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

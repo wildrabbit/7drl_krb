@@ -238,29 +238,24 @@ public class KrbMapController : MonoBehaviour, IMapController
 
     List<Vector2Int> GetNearbyCoords(Vector2Int reference, int radius)
     {
-        List<Vector2Int> pending = new List<Vector2Int>();
-        List<Vector2Int> pendingNextDepth = new List<Vector2Int>();
         HashSet<Vector2Int> candidates = new HashSet<Vector2Int>();
-
-        pending.Add(reference);
-        int depth = 0;
-        while (depth <= radius)
+        Queue<Vector2Int> pending = new Queue<Vector2Int>();
+        pending.Enqueue(reference);
+        while(pending.Count > 0)
         {
-            pendingNextDepth.Clear();
-            foreach (var curReference in pending)
+            var curReference = pending.Dequeue();
+            candidates.Add(curReference);
+            Vector2Int[] offsets = _mapHelper.GetOffsets(curReference);
+            // TODO: OPTIMIZATION: Make offsets dependent on the lookup direction
+            foreach (var offset in offsets)
             {
-                candidates.Add(curReference);
-                Vector2Int[] offsets = _mapHelper.GetOffsets(curReference);
-                // TODO: OPTIMIZATION: Make offsets dependent on the lookup direction
-                foreach (var offset in offsets)
-                {
-                    Vector2Int neighbourCoords = curReference + offset;
-                    if (!InBounds(neighbourCoords)) continue;
-                    if (pending.Contains(neighbourCoords) || pendingNextDepth.Contains(neighbourCoords) || candidates.Contains(neighbourCoords)) continue;
-                    pendingNextDepth.Add(neighbourCoords);
-                }
+                Vector2Int neighbourCoords = curReference + offset;
+                if (Distance(reference, neighbourCoords) > radius) continue;
+                if (!InBounds(neighbourCoords)) continue;
+                if (pending.Contains(neighbourCoords) || candidates.Contains(neighbourCoords)) continue;
+
+                pending.Enqueue(neighbourCoords);
             }
-            depth++;
         }
         return new List<Vector2Int>(candidates);
     }
@@ -288,7 +283,7 @@ public class KrbMapController : MonoBehaviour, IMapController
         Array.Copy(source, 1, offsets, 0, deltasLen);
     }
 
-    public void GetRandomOffsets(Vector2Int refCoords, int scatterLimitRadius, ref Vector2Int[] coordList, bool firstIsRef, Predicate<Vector2Int> exclusionCheck = null)
+    public void SetRandomCoords(Vector2Int refCoords, int scatterLimitRadius, ref Vector2Int[] coordList, bool firstIsRef, Predicate<Vector2Int> exclusionCheck = null)
     {
         int startIdx = firstIsRef ? 1 : 0;
         var nearbyCoords = GetNearbyCoords(refCoords, scatterLimitRadius);
@@ -306,15 +301,40 @@ public class KrbMapController : MonoBehaviour, IMapController
         }
     }
 
+    public Vector2Int RandomNeighbour(Vector2Int refCoords, Predicate<Vector2Int> restrictions = null)
+    {
+        var neighbours = GetNearbyCoords(refCoords, 1);
+        if(restrictions != null)
+        {
+            neighbours.RemoveAll(restrictions);
+        }
+
+        if(neighbours.Count > 0)
+        {
+            return neighbours[UnityEngine.Random.Range(0, neighbours.Count - 1)];
+        }
+        return refCoords;
+    }
+
     public List<MonsterSpawnData> MonsterSpawns
     {
         get
         {
             if (_mapData.GenerationData is FixedMapGeneratorData fixedMapData)
             {
+                var spawns = new List<MonsterSpawnData>(fixedMapData.MonsterSpawns);
+                if(fixedMapData.OriginIsTopLeft)
+                {
+                    foreach(var spawn in spawns)
+                    {
+                        spawn.Coords.x = Height - (spawn.Coords.x + 1);
+                    }
+                }
                 return fixedMapData.MonsterSpawns;
             }
             return null;
         }
     }
+
+
 }
