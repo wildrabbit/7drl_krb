@@ -10,12 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31b4179ebc9d46a41a29c516a03d642b, type: 3}
-  m_Name: Skeleton_Attack
+  m_Name: Skeleton_Idle
   m_EditorClassIdentifier: 
-  Actions:
-  - {fileID: 11400000, guid: e9dabe7df79e6ed44804f1584c0fe156, type: 2}
+  Actions: []
   Transitions:
   - Priority: 0
-    Condition: {fileID: 11400000, guid: fd034b3a002ae094f8e11bebad844e87, type: 2}
-    SuccessState: {fileID: 11400000, guid: 2f92746e2ab6932479a3801c28f5937c, type: 2}
+    Condition: {fileID: 11400000, guid: eb99535070fa2c349ac8fb3f38539d9c, type: 2}
+    SuccessState: {fileID: 11400000, guid: 3874834f8f605e54aa84536c8d294baa, type: 2}
+    FailState: {fileID: 11400000, guid: 2f92746e2ab6932479a3801c28f5937c, type: 2}
+  - Priority: 0
+    Condition: {fileID: 11400000, guid: 8b2ff18d4c356ef4d898a9d592ba585e, type: 2}
+    SuccessState: {fileID: 11400000, guid: 711f6b6c535963542b8b14482acce1c1, type: 2}
     FailState: {fileID: 11400000, guid: a02f06426780a554c9fbb747fec28d29, type: 2}

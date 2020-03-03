@@ -15,6 +15,7 @@ public class KrbMapController : MonoBehaviour, IMapController
 
     public int Height => _mapView.size.x;
     public int Width => _mapView.size.y;
+    public bool AllowDiagonals => _mapData.AllowDiagonals;
 
     KrbMapData _mapData;
     RectGridMap _mapHelper;
@@ -61,7 +62,7 @@ public class KrbMapController : MonoBehaviour, IMapController
 
     public Vector2Int CalculateMoveOffset(MoveDirection inputDir, Vector2Int playerCoords)
     {
-        return _mapHelper.GetDirectionOffset(inputDir, playerCoords);
+        return _mapHelper.GetDirectionOffset(inputDir, playerCoords, AllowDiagonals);
     }
 
     public Vector2Int CoordsFromWorld(Vector3 worldPos)
@@ -178,7 +179,7 @@ public class KrbMapController : MonoBehaviour, IMapController
     public List<Vector2Int> GetWalkableNeighbours(Vector2Int coords)
     {
         List<Vector2Int> neighbours = new List<Vector2Int>();
-        Vector2Int[] offsets = _mapHelper.GetOffsets(coords);
+        Vector2Int[] offsets = _mapHelper.GetOffsets(coords, AllowDiagonals);
         for (int i = 1; i < offsets.Length; ++i)
         {
             Vector2Int neighbourCoords = coords + offsets[i];
@@ -245,7 +246,7 @@ public class KrbMapController : MonoBehaviour, IMapController
         {
             var curReference = pending.Dequeue();
             candidates.Add(curReference);
-            Vector2Int[] offsets = _mapHelper.GetOffsets(curReference);
+            Vector2Int[] offsets = _mapHelper.GetOffsets(curReference, diagonals:true);
             // TODO: OPTIMIZATION: Make offsets dependent on the lookup direction
             foreach (var offset in offsets)
             {
@@ -277,7 +278,7 @@ public class KrbMapController : MonoBehaviour, IMapController
 
     public void GetNeighbourDeltas(Vector2Int currentCoords, out Vector2Int[] offsets)
     {
-        var source = _mapHelper.GetOffsets(currentCoords);
+        var source = _mapHelper.GetOffsets(currentCoords, AllowDiagonals);
         int deltasLen = source.Length - 1;
         offsets = new Vector2Int[deltasLen];
         Array.Copy(source, 1, offsets, 0, deltasLen);

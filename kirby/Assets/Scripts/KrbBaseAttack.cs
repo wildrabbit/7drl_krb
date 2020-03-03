@@ -13,7 +13,11 @@ public class KrbBaseAttack : BaseAttack
         };
 
         List<Vector2Int> offsets = new List<Vector2Int>(Data.TargetOffsetsNorth);
-        offsets.ForEach(x => x += source);
+        for(int i = 0; i < offsets.Count; ++i)
+        {
+            offsets[i] += source;
+        }
+        
         for (int i = 0; i < 4; ++i)
         {
             if(offsets.Contains(target))
