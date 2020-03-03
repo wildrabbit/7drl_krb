@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: da978f3e7de9d6d428502a2c47014862, type: 3}
-  m_Name: SkeletonAttack
+  m_Name: PlayerAttack
   m_EditorClassIdentifier: 
   Cooldown: 0
-  AddedDamage: 5
+  AddedDamage: 6
   TargetOffsetsNorth:
   - {x: 1, y: 0}
   SpawnData: {fileID: 0}

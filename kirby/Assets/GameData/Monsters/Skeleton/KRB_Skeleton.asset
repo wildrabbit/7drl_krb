@@ -23,13 +23,14 @@ MonoBehaviour:
     RegenRate: 0
     RegenAmount: 0
   MovingTraitData: {fileID: 11400000, guid: 0a7c3666a3cd6d14f81fba0ae6696f43, type: 2}
+  BattleData:
+    Attacks:
+    - {fileID: 11400000, guid: 9a382b21ddbf49c4fa43d0d16057a383, type: 2}
   InitialState: {fileID: 11400000, guid: 53976f17152818f4b808c6d623981082, type: 2}
   NoState: {fileID: 11400000, guid: a02f06426780a554c9fbb747fec28d29, type: 2}
   userTags: []
-  Attacks:
-  - {fileID: 11400000, guid: 9a382b21ddbf49c4fa43d0d16057a383, type: 2}
   PlayerCollisionDmg: 1
-  PathUpdateDelay: 4
+  PathUpdateDelay: 2
   LootInfoOnDeath:
     LootChance: 0
     MinItems: 0

@@ -17,6 +17,7 @@ MonoBehaviour:
   DisplayName: You
   CanMoveIntoMonsterCoords: 1
   MonsterCollisionDmg: 1
+  Attacks: []
   HPData:
     MaxHP: 30
     StartHP: 30
@@ -24,4 +25,7 @@ MonoBehaviour:
     RegenRate: 0
     RegenAmount: 0
   MovingTraitData: {fileID: 11400000, guid: 0a7c3666a3cd6d14f81fba0ae6696f43, type: 2}
+  BattleData:
+    Attacks:
+    - {fileID: 11400000, guid: 99d821f476bfb3b47a67a20fbb5d41dc, type: 2}
   Speed: 1

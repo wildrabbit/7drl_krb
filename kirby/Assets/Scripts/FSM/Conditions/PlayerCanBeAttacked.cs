@@ -7,6 +7,6 @@ public class PlayerCanBeAttacked : AI.Condition
 {
     public override bool Evaluate(Monster monster, float timeUnits)
     {
-        return monster.TrySelectAvailableAttack();
+        return monster.BattleTrait.TryGetAvailableAttack();
     }
 }
