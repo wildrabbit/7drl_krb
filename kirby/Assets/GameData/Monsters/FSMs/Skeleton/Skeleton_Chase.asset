@@ -10,8 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 31b4179ebc9d46a41a29c516a03d642b, type: 3}
-  m_Name: SkeletonFSM
+  m_Name: Skeleton_Chase
   m_EditorClassIdentifier: 
   Actions:
-  - {fileID: 11400000, guid: d26eb8bdc11048e4fa80c7049721df08, type: 2}
-  Transitions: []
+  - {fileID: 11400000, guid: a2bba7693f8b38543a1249c133ffdec4, type: 2}
+  Transitions:
+  - Priority: 0
+    Condition: {fileID: 11400000, guid: d6c879d6562c6e04da74ee2da14410ed, type: 2}
+    SuccessState: {fileID: 11400000, guid: 2f92746e2ab6932479a3801c28f5937c, type: 2}
+    FailState: {fileID: 11400000, guid: a02f06426780a554c9fbb747fec28d29, type: 2}
