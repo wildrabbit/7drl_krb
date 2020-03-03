@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.Tilemaps;
 
-[CreateAssetMenu(fileName = "New moving trait set", menuName = "KRB_RL/Data/Traits")]
+[CreateAssetMenu(fileName = "New moving trait set", menuName = "KRB_RL/Data/Traits/Moving")]
 public class KrbMovingTraitData : BaseMovingTraitData
 {
     public KrbTileType[] AllowedTypes;

@@ -26,15 +26,8 @@ MonoBehaviour:
   InitialState: {fileID: 11400000, guid: 2f92746e2ab6932479a3801c28f5937c, type: 2}
   NoState: {fileID: 11400000, guid: a02f06426780a554c9fbb747fec28d29, type: 2}
   userTags: []
-  WanderToIdleMinTurns: 10
-  WanderToIdleMaxTurns: 20
-  MinIdleTurns: 1
-  MaxIdleTurns: 3
-  IsMelee: 1
-  MeleeDamage: 1
-  VisibilityRange: 5
-  EscapeHPRatio: 0.25
-  EscapeSafeDistance: 5
+  Attacks:
+  - {fileID: 11400000, guid: 9a382b21ddbf49c4fa43d0d16057a383, type: 2}
   PlayerCollisionDmg: 1
   PathUpdateDelay: 4
   LootInfoOnDeath:

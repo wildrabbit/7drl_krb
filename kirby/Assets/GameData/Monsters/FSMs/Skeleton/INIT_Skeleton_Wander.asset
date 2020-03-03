@@ -15,7 +15,7 @@ MonoBehaviour:
   Actions:
   - {fileID: 11400000, guid: d26eb8bdc11048e4fa80c7049721df08, type: 2}
   Transitions:
-  - Priority: 0
+  - Priority: 1
     Condition: {fileID: 11400000, guid: eb99535070fa2c349ac8fb3f38539d9c, type: 2}
-    SuccessState: {fileID: 11400000, guid: 711f6b6c535963542b8b14482acce1c1, type: 2}
+    SuccessState: {fileID: 11400000, guid: 3874834f8f605e54aa84536c8d294baa, type: 2}
     FailState: {fileID: 11400000, guid: a02f06426780a554c9fbb747fec28d29, type: 2}
