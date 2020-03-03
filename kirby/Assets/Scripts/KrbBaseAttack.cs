@@ -13,20 +13,18 @@ public class KrbBaseAttack : BaseAttack
         };
 
         List<Vector2Int> offsets = new List<Vector2Int>(Data.TargetOffsetsNorth);
-        for(int i = 0; i < offsets.Count; ++i)
-        {
-            offsets[i] += source;
-        }
-        
+
         for (int i = 0; i < 4; ++i)
         {
-            if(offsets.Contains(target))
+            for(int j = 0; j < offsets.Count; ++j)
             {
-                dir = rotations[i];
-                return true;
+                if(source + offsets[j] == target)
+                {
+                    dir = rotations[i];
+                    return true;
+                }
+                offsets[j] = Rotate90CC(offsets[j]);
             }
-
-            offsets.ForEach(x => Rotate90CC(ref x));
         }
         return false;
     }
