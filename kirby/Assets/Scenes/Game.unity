@@ -206,7 +206,7 @@ GameObject:
   - component: {fileID: 404884899}
   - component: {fileID: 404884900}
   m_Layer: 0
-  m_Name: GameController
+  m_Name: KrbGameController
   m_TagString: GameController
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -240,7 +240,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameData: {fileID: 11400000, guid: 8cf2cde1159b5ef418c89ac1e172e2ba, type: 2}
   _cameraController: {fileID: 519420030}
-  _hudPrefab: {fileID: 0}
+  _hudPrefab: {fileID: 2542496872991686924, guid: d3d34c6b8eebf924ab95717c3754a1b3,
+    type: 3}
+  _gameOverDelay: 3
   _mapControllerPrefab: {fileID: 2742377815815997335, guid: ea87b1fdf6ddf5c48aaa35c50093c36a,
     type: 3}
 --- !u!1 &519420028
@@ -328,10 +330,10 @@ Camera:
   m_FocalLength: 50
   m_NormalizedViewPortRect:
     serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
+    x: 0.02
+    y: 0.225
+    width: 0.7
+    height: 0.75
   near clip plane: 0.3
   far clip plane: 1000
   field of view: 60

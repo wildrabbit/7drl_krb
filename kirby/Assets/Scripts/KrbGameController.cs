@@ -46,4 +46,9 @@ public class KrbGameController : GameController
     {
         return new KrbPlayerActionState();
     }
+
+    protected override GameEventLog CreateGameLogger()
+    {
+        return new KrbEventLogger();
+    }
 }
