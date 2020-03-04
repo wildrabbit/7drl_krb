@@ -34,12 +34,14 @@ public class PlayerItemEvent : BaseEvent
 public class EntityHealthEvent : BaseEvent
 {
     public string name;
-    public int dmg;
+    public int delta;
     public bool isPlayer;
     public bool isHeal;
-    public bool isExplosion;
-    public bool isCollision;
-    public bool isPoison;
+    public bool isAttack;
+    public bool isRegen;
+
+    public EntityHealthEvent(): base() { }
+
     public EntityHealthEvent(int Turns, float Units)
         : base(Turns, Units)
     {
@@ -50,9 +52,9 @@ public class EntityHealthEvent : BaseEvent
 
     public override string Message()
     {
-        if (isExplosion) return $"{name} got hit by Explosion! Received {dmg} damage\n";
-        if (isHeal) return $"{name} restored {dmg} HP\n";
-        if (isPoison) return $"{name} took {dmg} poison damage\n";
+        if (isAttack) return $"{name} got hit by an enemy attack! Received {delta} damage\n";
+        if (isHeal) return $"{name} restored {delta} HP\n";
+        if (isRegen) return $"{name} regenerated {delta} HP\n";
         return string.Empty;
     }
 }
@@ -87,15 +89,15 @@ public class PlayerActionEvent : BaseEvent
     {
         Movement,
         Idle,
-        BombPlacement,
-        BombDetonation,
-        // TODO: Grabbing loot, equipping, consuming, etc
+        Death
     }
 
     public override EventCategory Category => EventCategory.PlayerAction;
     ActionType PlayerActionType;
     public MoveDirection PlayerMoveDirection;
     public Vector2Int EventCoords;
+
+    public PlayerActionEvent() : base() { }
 
     public PlayerActionEvent(int turns, float time)
         : base(turns, time)
@@ -115,10 +117,9 @@ public class PlayerActionEvent : BaseEvent
         PlayerActionType = ActionType.Idle;
     }
 
-    public void SetBomb(Vector2Int coords)
+    public void SetDead()
     {
-        PlayerActionType = ActionType.BombPlacement;
-        EventCoords = coords;
+        PlayerActionType = ActionType.Death;
     }
 
     public override string Message()
@@ -128,17 +129,17 @@ public class PlayerActionEvent : BaseEvent
         {
             case ActionType.Movement:
                 {
-                    builder.AppendLine($"Player moves <b>{PlayerMoveDirection}</b> to <b>{EventCoords}</b>");
+                    builder.AppendLine($"You moved <b>{PlayerMoveDirection}</b> to <b>{EventCoords}</b>");
                     break;
                 }
             case ActionType.Idle:
                 {
-                    builder.AppendLine($"Player remains idle and contemplates her own existence");
+                    builder.AppendLine($"You've remained idle, contemplating your own existence");
                     break;
                 }
-            case ActionType.BombPlacement:
+            case ActionType.Death:
                 {
-                    builder.AppendLine($"Player places bomb @ <b>{EventCoords}</b>");
+                    builder.AppendLine($"You've died!");
                     break;
                 }
         }
