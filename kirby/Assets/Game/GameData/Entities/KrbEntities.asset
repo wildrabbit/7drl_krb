@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d6a5b0966a5e05448bd10b033fea308, type: 3}
+  m_Name: KrbEntities
+  m_EditorClassIdentifier: 
+  PlayerData: {fileID: 11400000, guid: 4df6c2cfac6900f4abf44f0791c57dac, type: 2}
+  PlayerPrefab: {fileID: 7286868507314482476, guid: 5036eb3e5e883ed4084fc5d636463dfc,
+    type: 3}
+  MonsterData:
+  - {fileID: 11400000, guid: 7c56cab84d60a1b449277069aa1fecf4, type: 2}
+  MonsterPrefab: {fileID: -1582251310621275726, guid: 0c6ea3c151a2cda46b002207cdc2fc0b,
+    type: 3}
+  BlockPrefab: {fileID: 2204355294785007005, guid: 5e03876ee3996854280f42772cd7261b,
+    type: 3}
+  TrapPrefab: {fileID: 2679912814921287788, guid: 0ec00f7d71dc22e41955dc422e335380,
+    type: 3}

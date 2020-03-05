@@ -50,6 +50,9 @@ TagManager:
   - name: Entities
     uniqueID: 796383053
     locked: 0
+  - name: HUD
+    uniqueID: 4055366573
+    locked: 0
   - name: DBG
     uniqueID: 2826357075
     locked: 0
