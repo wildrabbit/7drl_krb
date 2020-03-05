@@ -4,97 +4,119 @@ using System.Collections.Generic;
 
 public class KrbBaseAttack : BaseAttack
 {
-    public override int MaxRadius => _maxRadius;
+    Dictionary<MoveDirection, Vector2Int[]> Offsets;
 
-    int _maxRadius;
-
-    public override void Init()
+    public KrbBaseAttack(BaseAttackData data)
+        :base(data)
     {
-        _maxRadius = -1;
-        foreach(var offset in Data.TargetOffsetsNorth)
-        {
-            var absX = Mathf.Abs(offset.x);
-            var absY = Mathf.Abs(offset.y);
-            _maxRadius = Mathf.Max(_maxRadius, Mathf.Max(absX, absY));
-        }
+        BuildRotatedOffsets();
     }
 
-    public override bool CanTargetBeReached(Vector2Int source, Vector2Int target, out List<MoveDirection> validDirections)
+    void BuildRotatedOffsets()
     {
-        validDirections = new List<MoveDirection>();
-        MoveDirection[] rotations = new MoveDirection[]
+        Offsets = new Dictionary<MoveDirection, Vector2Int[]>();
+        var northOffsets = ((KrbBaseAttackData)Data).TargetOffsetsNorth.ToArray();
+        Offsets.Add(MoveDirection.N, northOffsets);
+        MoveDirection[] rotations = { MoveDirection.E, MoveDirection.S, MoveDirection.W };
+        for(int i = 0; i < rotations.Length; ++i)
         {
-            MoveDirection.N, MoveDirection.E, MoveDirection.S, MoveDirection.W
-        };
+            Vector2Int[] coords = new Vector2Int[northOffsets.Length];
+            northOffsets.CopyTo(coords, 0);
 
-        List<Vector2Int> offsets = new List<Vector2Int>(Data.TargetOffsetsNorth);
+            int numRotations = i + 1;
 
-        for (int i = 0; i < rotations.Length; ++i)
-        {
-            for(int j = 0; j < offsets.Count; ++j)
+            for (int j = 0; j < coords.Length; ++j)
             {
-                if(source + offsets[j] == target)
+                for (int k = 0; k < numRotations ; ++k)
                 {
-                    validDirections.Add(rotations[i]);
+                    coords[j] = Rotate90CC(coords[j]);
                 }
-                offsets[j] = Rotate90CC(offsets[j]);
             }
+            Offsets.Add(rotations[i], coords);
         }
-        return validDirections.Count > 0;
     }
-
 
     Vector2Int Rotate90CC(Vector2Int coords)
     {
         return new Vector2Int(-coords.y, coords.x);
     }
 
-    public override bool CanTargetBeReachedAtDir(Vector2Int source, Vector2Int target, MoveDirection direction)
+    bool CanCoordsBeReached(Vector2Int srcCoords, Vector2Int tgtCoords)
     {
-        List<Vector2Int> offsets = GetRotatedOffsets(direction);
-        for(int j = 0; j < offsets.Count; ++j)
+        foreach (var rotationOffsetsPair in Offsets)
         {
-            if (source + offsets[j] == target)
+            for (int i = 0; i < rotationOffsetsPair.Value.Length; ++i)
             {
-                return true;
+                if (tgtCoords == srcCoords + rotationOffsetsPair.Value[i])
+                {
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    public override List<Vector2Int> GetRotatedOffsets(MoveDirection moveDir)
+    public override bool CanTargetBeReached(IBattleEntity attacker, IBattleEntity target)
     {
-        List<Vector2Int> offsets = new List<Vector2Int>(Data.TargetOffsetsNorth);
-        int rotations = 0;
-        switch (moveDir)
+        var srcCoords = attacker.Coords;
+        var tgtCoords = target.Coords;
+        return CanCoordsBeReached(srcCoords, tgtCoords);
+    }
+
+    public override List<IBattleEntity> FindAllReachableTargets(IBattleEntity source)
+    {
+        MoveDirection bestDir = MoveDirection.None;
+        List<IBattleEntity> entities = new List<IBattleEntity>();
+        var srcCoords = source.Coords;
+        foreach (var pair in Offsets)
         {
-            case MoveDirection.N:
+            foreach(var offsetCoord in pair.Value)
             {
-                break;
-            }
-            case MoveDirection.E:
-            {
-                rotations = 1;
-                break;
-            }
-            case MoveDirection.S:
-            {
-                rotations = 2;
-                break;
-            }
-            case MoveDirection.W:
-            {
-                rotations = 3;
-                break;
+                Vector2Int sampleCoords = srcCoords + offsetCoord;
+                var hostiles = _entityController.GetFilteredEntitiesAt<IBattleEntity>(sampleCoords).FindAll(x => x.IsHostileTo(source));
+
+                // TODO: Add scoring system to qualify potential of that attack
+                if(hostiles.Count >= entities.Count)
+                {
+                    bestDir = pair.Key;
+                    entities = hostiles;
+                }
             }
         }
-        for (int j = 0; j < offsets.Count; ++j)
+        return entities;
+    }
+
+
+    public override List<IBattleEntity> FindTargetsAtCoords(IBattleEntity source, Vector2Int refCoords)
+    {
+        var srcCoords = source.Coords;
+        if(CanCoordsBeReached(srcCoords, refCoords))
         {
-            for (int i = 0; i < rotations; ++i)
+            return _entityController.GetFilteredEntitiesAt<IBattleEntity>(refCoords).FindAll(x => x.IsHostileTo(source));
+        }
+        return new List<IBattleEntity>();
+    }
+
+    public override List<IBattleEntity> FindAllReachableTargets(IBattleEntity source, IBattleEntity requiredTarget)
+    {
+        MoveDirection bestDir = MoveDirection.None;
+        List<IBattleEntity> entities = new List<IBattleEntity>();
+        var srcCoords = source.Coords;
+        foreach (var pair in Offsets)
+        {
+            foreach (var offsetCoord in pair.Value)
             {
-                offsets[j] = Rotate90CC(offsets[j]);
+                Vector2Int sampleCoords = srcCoords + offsetCoord;
+                var hostiles = _entityController.GetFilteredEntitiesAt<IBattleEntity>(sampleCoords).FindAll(x => x.IsHostileTo(source));
+
+                // TODO: Add scoring system to qualify potential of that attack
+                if (hostiles.Contains(requiredTarget) && hostiles.Count >= entities.Count)
+                {
+                    bestDir = pair.Key;
+                    entities = hostiles;
+                }
             }
         }
-        return offsets;
+        return entities;
     }
 }

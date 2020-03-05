@@ -39,7 +39,6 @@ public class KrbPlayerActionState : PlayerActionState
             return false;
         }
 
-        IAbsorbableEntity candidate = null;
         var targetCandidates = entities.GetEntitiesAt(newPlayerCoords);
         foreach(var c in targetCandidates)
         {

@@ -54,7 +54,7 @@ public class KrbPlayer: Player, IAbsorbingEntity
         {
             _originalBattleTrait = _battleTrait;
             _battleTrait = new BattleTrait();
-            _battleTrait.Init(_entityController, entity.AbsorptionData.AttackReplace, this, _battleEvents);
+            _battleTrait.Init(_entityController, _mapController, entity.AbsorptionData.AttackReplace, this, _battleEvents);
             
         }
 
