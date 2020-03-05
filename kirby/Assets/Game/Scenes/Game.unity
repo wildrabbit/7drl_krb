@@ -238,6 +238,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c792e172ef292940a40b3f7a675871b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _rangePrefab: {fileID: -7860619742499639149, guid: 4123d940c53febc43a597d81eaaa0b73,
+    type: 3}
   _gameData: {fileID: 11400000, guid: 8cf2cde1159b5ef418c89ac1e172e2ba, type: 2}
   _cameraController: {fileID: 519420030}
   _hudPrefab: {fileID: 2542496872991686924, guid: d3d34c6b8eebf924ab95717c3754a1b3,

@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2e38dd8a3356cfd48b944e55c2f1d8f8, type: 3}
+  m_Name: PlayerRanged
+  m_EditorClassIdentifier: 
+  Cooldown: 0
+  MinDamage: 2
+  MaxDamage: 4
+  Attributes: []
+  Piercing: 0
+  AllowedTiles:
+  - {fileID: 11400000, guid: eca604e9addef2945b23cd57f3bc88e7, type: 2}
+  - {fileID: 11400000, guid: 5685345096290a34994f6ace647667f7, type: 2}
+  - {fileID: 11400000, guid: 83f11a25a717cdd4aaf64136b3a3db61, type: 2}
+  - {fileID: 11400000, guid: e6448bf226ea0af44961981e326ecc1c, type: 2}
+  MinRange: 1
+  MaxRange: 4

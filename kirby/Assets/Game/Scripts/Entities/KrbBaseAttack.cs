@@ -97,26 +97,9 @@ public class KrbBaseAttack : BaseAttack
         return new List<IBattleEntity>();
     }
 
-    public override List<IBattleEntity> FindAllReachableTargets(IBattleEntity source, IBattleEntity requiredTarget)
-    {
-        MoveDirection bestDir = MoveDirection.None;
-        List<IBattleEntity> entities = new List<IBattleEntity>();
-        var srcCoords = source.Coords;
-        foreach (var pair in Offsets)
-        {
-            foreach (var offsetCoord in pair.Value)
-            {
-                Vector2Int sampleCoords = srcCoords + offsetCoord;
-                var hostiles = _entityController.GetFilteredEntitiesAt<IBattleEntity>(sampleCoords).FindAll(x => x.IsHostileTo(source));
 
-                // TODO: Add scoring system to qualify potential of that attack
-                if (hostiles.Contains(requiredTarget) && hostiles.Count >= entities.Count)
-                {
-                    bestDir = pair.Key;
-                    entities = hostiles;
-                }
-            }
-        }
-        return entities;
+    public override List<bool> GetReachableStateForCoords(IBattleEntity source, List<Vector2Int> coords)
+    {
+        return new List<bool>();
     }
 }

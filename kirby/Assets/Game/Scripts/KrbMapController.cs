@@ -60,9 +60,9 @@ public class KrbMapController : MonoBehaviour, IMapController
         return _mapHelper.Distance(from, to);
     }
 
-    public Vector2Int CalculateMoveOffset(MoveDirection inputDir, Vector2Int playerCoords)
+    public Vector2Int CalculateMoveOffset(MoveDirection inputDir, Vector2Int refCoords)
     {
-        return _mapHelper.GetDirectionOffset(inputDir, playerCoords, AllowDiagonals);
+        return _mapHelper.GetDirectionOffset(inputDir, refCoords, AllowDiagonals);
     }
 
     public Vector2Int CoordsFromWorld(Vector3 worldPos)
@@ -176,22 +176,6 @@ public class KrbMapController : MonoBehaviour, IMapController
         _mapView.CompressBounds();
     }
 
-    public List<Vector2Int> GetWalkableNeighbours(Vector2Int coords)
-    {
-        List<Vector2Int> neighbours = new List<Vector2Int>();
-        Vector2Int[] offsets = _mapHelper.GetOffsets(coords, AllowDiagonals);
-        for (int i = 1; i < offsets.Length; ++i)
-        {
-            Vector2Int neighbourCoords = coords + offsets[i];
-            var tile = TileAt(neighbourCoords);
-            if (tile != null && tile.Walkable)
-            {
-                neighbours.Add(neighbourCoords);
-            }
-        }
-        return neighbours;
-    }
-
     public KrbTile GetTileByType(KrbTileType type)
     {
         if(_palette.TryGetValue(type, out var tile))
@@ -217,11 +201,6 @@ public class KrbMapController : MonoBehaviour, IMapController
         playerCoords.y = Mathf.Clamp(playerCoords.y, 0, _mapView.size.y - 1);
     }
 
-    internal bool IsWalkableTile(Vector2Int playerTargetPos)
-    {
-        KrbTile gameTile= (KrbTile) _mapView.GetTile((Vector3Int)playerTargetPos);
-        return (gameTile == null) ? false : gameTile.Walkable;
-    }
 
     public Rect GetBounds()
     {
@@ -271,9 +250,9 @@ public class KrbMapController : MonoBehaviour, IMapController
         return _mapView.HasTile(coords3D);
     }
 
-    public bool IsNavigationValidTile(Vector3Int coords)
+    public bool ValidCoords(Vector3Int coords)
     {
-        return _mapView.HasTile(coords) && ((KrbTile)GetTileAt((Vector2Int)coords)).Walkable;
+        return _mapView.HasTile(coords);
     }
 
     public void GetNeighbourDeltas(Vector2Int currentCoords, out Vector2Int[] offsets)

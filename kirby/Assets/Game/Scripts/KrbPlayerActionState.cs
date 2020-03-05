@@ -5,23 +5,23 @@ public class KrbPlayerActionState : PlayerActionState
 {
     protected override bool HandleExtendedActions(PlayerActionStateContext contextData, out bool timeWillPass, out int nextPlayContext)
     {
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            contextData.EntityController.Player.SetSpeedRate(40.0f);
-        }
-        if(Input.GetKeyDown(KeyCode.G))
-        {
-            contextData.EntityController.Player.ResetSpeedRate();
-        }
+        //if(Input.GetKeyDown(KeyCode.F))
+        //{
+        //    contextData.EntityController.Player.SetSpeedRate(40.0f);
+        //}
+        //if(Input.GetKeyDown(KeyCode.G))
+        //{
+        //    contextData.EntityController.Player.ResetSpeedRate();
+        //}
 
-        // REMOVE
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            foreach (Monster m in contextData.EntityController.Monsters)
-            {
-                m.ToggleDebug();
-            }
-        }
+        //// REMOVE
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    foreach (Monster m in contextData.EntityController.Monsters)
+        //    {
+        //        m.ToggleDebug();
+        //    }
+        //}
 
         timeWillPass = false;
         nextPlayContext = GameController.PlayStates.Action;
