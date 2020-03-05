@@ -42,4 +42,6 @@ MonoBehaviour:
   TrapSpawns:
   - TrapData: {fileID: 11400000, guid: b58e68fc2f489ed4bb3331e7c8251ab8, type: 2}
     Coords: {x: 2, y: 8}
-  BlockSpawns: []
+  BlockSpawns:
+  - BlockData: {fileID: 11400000, guid: ec33955968bdc744e861d99b7a726c67, type: 2}
+    Coords: {x: 7, y: 7}

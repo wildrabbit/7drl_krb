@@ -69,5 +69,9 @@ public class KrbGameController : GameController
     protected override void BuildBlocks()
     {
         var blocks = ((KrbMapController)_mapController).BlockSpawns;
+        foreach (var block in blocks)
+        {
+            _entityController.CreateBlockingEntity(block.BlockData, block.Coords);
+        }
     }
 }

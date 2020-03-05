@@ -9,13 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: da978f3e7de9d6d428502a2c47014862, type: 3}
-  m_Name: TEST_StrongSkeletonAttack
+  m_Script: {fileID: 11500000, guid: 7c14e515ca7e8794baacbd7aa53b2ebd, type: 3}
+  m_Name: Bush
   m_EditorClassIdentifier: 
-  Cooldown: 0
-  AddedDamage: 8
-  Attributes:
-  - CutsGrass
-  TargetOffsetsNorth:
-  - {x: 1, y: 0}
-  SpawnData: {fileID: 0}
+  DefaultViewPrefab: {fileID: 8426508259233383614, guid: bd23c2dcc151d07418d5fe6df1710bad,
+    type: 3}
+  DisplayName: Bush
+  BlockingTrait:
+    UnlockAttributes:
+    - CutsGrass
+    - Fire

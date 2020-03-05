@@ -786,7 +786,7 @@ TextureImporter:
     second: tiny_dungeon_world_259
   - first:
       213: 5394383749565524850
-    second: tiny_dungeon_world_260
+    second: bush
   - first:
       213: -415069297292623704
     second: tiny_dungeon_world_261
@@ -6481,7 +6481,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tiny_dungeon_world_260
+      name: bush
       rect:
         serializedVersion: 2
         x: 80
