@@ -45,7 +45,7 @@ public class KrbPlayerActionState : PlayerActionState
             if (c is IAbsorbableEntity test && player.AbsorberTrait.TryAbsorb(test))
             {
                 canMove = true;
-                break;
+                return true;
             }
         }
         return false;

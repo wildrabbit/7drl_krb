@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 09bc5f11c4d254941a37ebf522052a31, type: 3}
+  m_Name: KRB_Mage
+  m_EditorClassIdentifier: 
+  DefaultViewPrefab: {fileID: 5517707472908528586, guid: b6bcec5d4f7705a41a5c867f287e186e,
+    type: 3}
+  DisplayName: Mage
+  ThinkingDelay: 1
+  HPData:
+    MaxHP: 15
+    StartHP: 15
+    Regen: 0
+    RegenRate: 0
+    RegenAmount: 0
+  MovingTraitData: {fileID: 11400000, guid: 8212748a0d9f99847a30b63d2edd8eac, type: 2}
+  BattleData:
+    Attacks:
+    - {fileID: 11400000, guid: 5fccee33bfd61a04a880cc6845a6a249, type: 2}
+  InitialState: {fileID: 11400000, guid: 6afeb5d756c97b347a3bbc401fe24beb, type: 2}
+  NoState: {fileID: 11400000, guid: a02f06426780a554c9fbb747fec28d29, type: 2}
+  userTags: []
+  PlayerCollisionDmg: 1
+  PathUpdateDelay: 2
+  LootInfoOnDeath:
+    LootChance: 0
+    MinItems: 0
+    MaxItems: 0
+    MinRolls: 0
+    MaxRolls: 0
+  XPOnDeath: 0
+  AbsorptionData: {fileID: 11400000, guid: d5b32a17193621b4b8c813bee32d8653, type: 2}
+  AbsorbablePrefab: {fileID: 3304027762964330494, guid: 0d171acfee7304f4b9d63cd8803e7e6e,
+    type: 3}

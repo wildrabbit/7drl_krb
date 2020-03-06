@@ -14,7 +14,7 @@ public class KrbPlayer: Player, IAbsorbingEntity
 
     AbsorberTrait _absorberTrait;
     KrbGameEvents.AbsorptionEvents _absorbEvents;
-    BaseGameEvents.BattleEvents _battleEvents;
+    BaseGameEvents _gameEvents;
 
     protected override void DoInit(BaseEntityDependencies deps)
     {
@@ -23,7 +23,7 @@ public class KrbPlayer: Player, IAbsorbingEntity
         _absorbEvents = ((KrbGameEvents)deps.GameEvents).Absorption;
         _absorberTrait = new AbsorberTrait();
         _absorberTrait.Init(this, ((KrbPlayerData)_entityData).AbsorberData);
-        _battleEvents = deps.GameEvents.Battle;
+        _gameEvents = deps.GameEvents;
     }
 
     public override void AddTime(float timeUnits, ref int playState)
@@ -34,6 +34,7 @@ public class KrbPlayer: Player, IAbsorbingEntity
 
     public void StartAbsorption(IAbsorbableEntity entity)
     {
+        string[] attributes = new string[] { };
         // Replace stuff
         if(entity.AbsorptionData.WillChangeView)
         {
@@ -54,8 +55,8 @@ public class KrbPlayer: Player, IAbsorbingEntity
         {
             _originalBattleTrait = _battleTrait;
             _battleTrait = new BattleTrait();
-            _battleTrait.Init(_entityController, _mapController, entity.AbsorptionData.AttackReplace, this, _battleEvents);
-            
+            _battleTrait.Init(_entityController, _mapController, entity.AbsorptionData.AttackReplace, this, _gameEvents);
+            attributes = _battleTrait.FirstAttack.Attributes;            
         }
 
         if(entity.AbsorptionData.WillChangeHPTrait)
@@ -71,7 +72,7 @@ public class KrbPlayer: Player, IAbsorbingEntity
             _movingTrait = entity.AbsorptionData.MovingReplace.CreateRuntimeTrait();
         }
 
-        _absorbEvents.SendAbsorptionHappened(entity, this);
+        _absorbEvents.SendAbsorptionHappened(entity, this, attributes);
     }
 
     public bool CanAbsorb(IAbsorbableEntity entity)

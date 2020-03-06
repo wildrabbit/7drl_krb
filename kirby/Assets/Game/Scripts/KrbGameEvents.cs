@@ -5,7 +5,7 @@ public class KrbGameEvents: BaseGameEvents
     public class AbsorptionEvents
     {
         public event Action<IAbsorbableEntity> CanBeAbsorbed;
-        public event Action<IAbsorbableEntity, IAbsorbingEntity> WasAbsorbed;
+        public event Action<IAbsorbableEntity, IAbsorbingEntity, string[]> WasAbsorbed;
         public event Action<IAbsorbingEntity> AbsorptionExpired;
         public event Action<IAbsorbingEntity> AbsorptionCancelled;
 
@@ -14,9 +14,9 @@ public class KrbGameEvents: BaseGameEvents
             CanBeAbsorbed?.Invoke(entity);
         }
 
-        public void SendAbsorptionHappened(IAbsorbableEntity target, IAbsorbingEntity absorber)
+        public void SendAbsorptionHappened(IAbsorbableEntity target, IAbsorbingEntity absorber, string[] traitsGained)
         {
-            WasAbsorbed?.Invoke(target, absorber);
+            WasAbsorbed?.Invoke(target, absorber, traitsGained);
         }
 
         public void SendAbsorptionExpired(IAbsorbingEntity absorber)

@@ -9,13 +9,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d372cb54cc722dd4ea96c1493326b75e, type: 3}
-  m_Name: KrbMap 1
+  m_Script: {fileID: 11500000, guid: 2e38dd8a3356cfd48b944e55c2f1d8f8, type: 3}
+  m_Name: AbsorbMageRanged
   m_EditorClassIdentifier: 
-  Palette:
+  Cooldown: 2
+  MinDamage: 8
+  MaxDamage: 8
+  Attributes:
+  - 
+  Piercing: 0
+  AllowedTiles:
   - {fileID: 11400000, guid: eca604e9addef2945b23cd57f3bc88e7, type: 2}
-  - {fileID: 11400000, guid: 2a5db9a291141ca458e9f24bf3c2d4c6, type: 2}
+  - {fileID: 11400000, guid: 5685345096290a34994f6ace647667f7, type: 2}
   - {fileID: 11400000, guid: 83f11a25a717cdd4aaf64136b3a3db61, type: 2}
-  GenerationData: {fileID: 11400000, guid: 14e8043e71ffcee4799e21a73918321d, type: 2}
-  AllowDiagonals: 0
-  DistanceStrategy: 0
+  - {fileID: 11400000, guid: e6448bf226ea0af44961981e326ecc1c, type: 2}
+  MinRange: 2
+  MaxRange: 3

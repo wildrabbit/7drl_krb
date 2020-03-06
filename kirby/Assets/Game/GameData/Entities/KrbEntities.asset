@@ -17,6 +17,7 @@ MonoBehaviour:
     type: 3}
   MonsterData:
   - {fileID: 11400000, guid: 7c56cab84d60a1b449277069aa1fecf4, type: 2}
+  - {fileID: 11400000, guid: eb07b47b6fc06314f887cd60a2666635, type: 2}
   MonsterPrefab: {fileID: -1582251310621275726, guid: 0c6ea3c151a2cda46b002207cdc2fc0b,
     type: 3}
   BlockPrefab: {fileID: 2204355294785007005, guid: 5e03876ee3996854280f42772cd7261b,

@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
+public class SimpleMessage : EventLogMessage
+{
+    public string Text;
+    public override EventLogCategory Category => EventLogCategory.Information;
+
+    public override string Message()
+    {
+        return Text;
+    }
+}
+
 public class PlayerItemEvent : EventLogMessage
 {
     public bool isAdded;
@@ -29,6 +40,7 @@ public class AbsorptionEvent : EventLogMessage
     public Vector2Int AbsorberCoords;
     public string AbsorbedName;
     public Vector2Int AbsorbedCoords;
+    public string[] Attributes;
 
     public AbsorptionEvent() : base() { }
 
@@ -38,7 +50,7 @@ public class AbsorptionEvent : EventLogMessage
 
     public override string Message()
     {
-        return $"Monster {AbsorbedName} at {AbsorbedCoords} was absorbed by {AbsorberName} at {AbsorberCoords}!\n";
+        return $"Monster {AbsorbedName} at {AbsorbedCoords} was absorbed by {AbsorberName} and Gained [{string.Join(",",Attributes)}]!\n";
     }
 }
 
@@ -54,7 +66,7 @@ public class AbsorptionExpiredEvent : EventLogMessage
 
     public override string Message()
     {
-        return $"{AbsorberName} at {AbsorberCoords} went back to its past shape!\n";
+        return $"{AbsorberName} at {AbsorberCoords} went back to its original shape and lost all attributes!\n";
     }
 }
 
@@ -96,9 +108,9 @@ public class EntityHealthEvent : EventLogMessage
 
     public override string Message()
     {
-        if (isAttack) return $"{name} got hit by an enemy attack! Received {delta} damage\n";
-        if (isHeal) return $"{name} restored {delta} HP\n";
-        if (isRegen) return $"{name} regenerated {delta} HP\n";
+        //if (isAttack) return $"{name} got hit by an enemy attack! Received {delta} damage\n";
+        //if (isHeal) return $"{name} restored {delta} HP\n";
+        //if (isRegen) return $"{name} regenerated {delta} HP\n";
         return string.Empty;
     }
 }
@@ -125,7 +137,42 @@ public class PlayerMonsterCollisionEvent : EventLogMessage
     }
 }
 
+public class BattleEventLog : EventLogMessage
+{
+    public BattleActionResult results;
+    public override EventLogCategory Category => EventLogCategory.Information;
 
+    public override string Message()
+    {
+        StringBuilder s = new StringBuilder();
+        s.AppendLine($"{results.AttackerName} attacked {results.DefenderName} and inflicted {results.DefenderDmgTaken} damage!");
+        if(results.DefenderDefeated)
+        {
+            s.AppendLine($"{results.DefenderName} was defeated!");
+        }
+        
+        return s.ToString();
+    }
+}
+
+public class BlockEvent : EventLogMessage
+{
+    public bool Succeeded;
+    public string[] RequiredAttributes;
+    public override EventLogCategory Category => EventLogCategory.Information;
+
+    public override string Message()
+    {
+        if(Succeeded)
+        {
+            return "Block was successfully removed!\n";
+        }
+        else
+        {
+            return $"Bumped against a block. Requires an attack with the properties: [{string.Join(",",RequiredAttributes)}]\n";
+        }
+    }
+}
 
 
 public class PlayerActionEvent : EventLogMessage
@@ -226,10 +273,14 @@ public class KrbEventLogger: GameEventLog
         _gameEvents.Player.Died += PlayerDied;
         _gameEvents.Player.IdleTurn += PlayerIdle;
         _gameEvents.Traps.EntityFellIntoTrap += TriggeredTrap;
+        _gameEvents.Battle.Attack += Attacked;
+        _gameEvents.Battle.AttemptedAttackOnCooldown += AttackOnCooldown;
+        _gameEvents.Blocks.EntityBlockInteraction += OnBlockInteraction;
         ((KrbGameEvents)_gameEvents).Absorption.CanBeAbsorbed += AbsorptionReady;
         ((KrbGameEvents)_gameEvents).Absorption.WasAbsorbed += AbsorptionHappened;
         ((KrbGameEvents)_gameEvents).Absorption.AbsorptionExpired += AbsorptionExpired;
     }
+
 
     public void DisconnectEvents()
     {
@@ -237,6 +288,9 @@ public class KrbEventLogger: GameEventLog
         _gameEvents.Player.Died -= PlayerDied;
         _gameEvents.Player.IdleTurn -= PlayerIdle;
         _gameEvents.Traps.EntityFellIntoTrap -= TriggeredTrap;
+        _gameEvents.Battle.Attack -= Attacked;
+        _gameEvents.Battle.AttemptedAttackOnCooldown -= AttackOnCooldown;
+        _gameEvents.Blocks.EntityBlockInteraction -= OnBlockInteraction;
         ((KrbGameEvents)_gameEvents).Absorption.CanBeAbsorbed -= AbsorptionReady;
         ((KrbGameEvents)_gameEvents).Absorption.WasAbsorbed -= AbsorptionHappened;
         ((KrbGameEvents)_gameEvents).Absorption.AbsorptionExpired -= AbsorptionExpired;
@@ -264,11 +318,12 @@ public class KrbEventLogger: GameEventLog
         AddEvent(evt);
     }
 
-    public void AbsorptionHappened(IAbsorbableEntity absorbed, IAbsorbingEntity absorber)
+    public void AbsorptionHappened(IAbsorbableEntity absorbed, IAbsorbingEntity absorber,string[] attrs)
     {
         AbsorptionEvent evt = CreateEvent<AbsorptionEvent>();
         evt.AbsorberName = absorber.Name;
         evt.AbsorberCoords = absorber.Coords;
+        evt.Attributes = attrs;
 
         evt.AbsorbedName = absorbed.Name;
         evt.AbsorbedCoords = absorbed.Coords;
@@ -314,5 +369,26 @@ public class KrbEventLogger: GameEventLog
     }
 
 
+    private void OnBlockInteraction(IBlockingEntity arg1, BaseEntity arg2, bool arg3)
+    {
+        BlockEvent evt = CreateEvent<BlockEvent>();
+        evt.RequiredAttributes = arg1.BlockingTrait.Attributes;
+        evt.Succeeded = arg3;
+        AddEvent(evt);
+    }
+
+    private void AttackOnCooldown(IBattleEntity obj)
+    {
+        var evt = CreateEvent<SimpleMessage>();
+        evt.Text = "Tried to attack while on cooldown!\n";
+        AddEvent(evt);
+    }
+
+    private void Attacked(IBattleEntity arg1, IBattleEntity arg2, BattleActionResult arg3)
+    {
+        var evt = CreateEvent<BattleEventLog>();
+        evt.results = arg3;
+        AddEvent(evt);
+    }
 
 }

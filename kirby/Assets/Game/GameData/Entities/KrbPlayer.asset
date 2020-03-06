@@ -21,12 +21,12 @@ MonoBehaviour:
     MaxHP: 80
     StartHP: 80
     Regen: 1
-    RegenRate: 2
+    RegenRate: 5
     RegenAmount: 1
   MovingTraitData: {fileID: 11400000, guid: 0a7c3666a3cd6d14f81fba0ae6696f43, type: 2}
   BattleData:
     Attacks:
-    - {fileID: 11400000, guid: ec397527270d9924f8af4bc1eae8f39a, type: 2}
+    - {fileID: 11400000, guid: 0ddd974ee04aee64a9f72a9d8c0bc52d, type: 2}
   Speed: 1
   AbsorberData:
     HPPercentToEnableAbsorb: 0.15

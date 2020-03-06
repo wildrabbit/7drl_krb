@@ -69,7 +69,7 @@ public class KrbMonster : Monster, IAbsorbableEntity
 
     public void BeAbsorbed(IAbsorbingEntity absorber)
     {
-        HPTrait.Decrease(HPTrait.HP);
+        TakeDamage(_hpTrait.HP);
     }
 
     public bool CanBeAbsorbedBy(IAbsorbingEntity absorber)
@@ -94,6 +94,6 @@ public class KrbMonster : Monster, IAbsorbableEntity
             return false;
         }
 
-        return (_hpTrait.HPRatio <= _absorptionData.HPRatioThreshold);        
+        return (_hpTrait.HPRatio > 0 && _hpTrait.HPRatio <= _absorptionData.HPRatioThreshold);        
     }
 }

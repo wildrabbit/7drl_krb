@@ -20,7 +20,7 @@ MonoBehaviour:
   MapInfo: {fileID: 4900000, guid: 01b9cd69951eb0847a5e61fb694a4b2d, type: 3}
   MonsterSpawns:
   - Coords: {x: 1, y: 2}
-    Monster: {fileID: 0}
+    Monster: {fileID: 11400000, guid: 7c56cab84d60a1b449277069aa1fecf4, type: 2}
     SpawnTags: []
     MinAmount: 2
     MaxAmount: 2
@@ -30,13 +30,13 @@ MonoBehaviour:
     ActivatesByDistance: 0
     PlayerDistance: 0
   - Coords: {x: 5, y: 7}
-    Monster: {fileID: 0}
+    Monster: {fileID: 11400000, guid: eb07b47b6fc06314f887cd60a2666635, type: 2}
     SpawnTags: []
     MinAmount: 1
     MaxAmount: 2
     Scatter: 1
-    MaxRespawns: 0
-    RespawnDelayTimeUnits: 0
+    MaxRespawns: 2
+    RespawnDelayTimeUnits: 7
     ActivatesByDistance: 0
     PlayerDistance: 0
   TrapSpawns:

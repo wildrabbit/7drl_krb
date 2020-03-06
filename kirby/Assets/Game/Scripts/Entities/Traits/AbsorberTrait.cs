@@ -62,6 +62,7 @@ public class AbsorberTrait
         {
             _activeAbsorptionData = target.AbsorptionData;
             _owner.StartAbsorption(target);
+            target.BeAbsorbed(_owner);
             _elapsed = 0.0f;
             return true;
         }
