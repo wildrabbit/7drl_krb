@@ -5,15 +5,15 @@ public class KrbPlayerActionState : PlayerActionState
 {
     protected override bool HandleExtendedActions(PlayerActionStateContext contextData, out bool timeWillPass, out int nextPlayContext)
     {
-        //if(Input.GetKeyDown(KeyCode.F))
-        //{
-        //    contextData.EntityController.Player.SetSpeedRate(40.0f);
-        //}
-        //if(Input.GetKeyDown(KeyCode.G))
-        //{
-        //    contextData.EntityController.Player.ResetSpeedRate();
-        //}
-
+        if(((KrbInputController)contextData.Input).AbsorbCancel)
+        {
+            if(typeof(IAbsorbingEntity).IsAssignableFrom(contextData.EntityController.Player.GetType()))
+            {
+                var absorbing = (IAbsorbingEntity)contextData.EntityController.Player;
+                absorbing.AbsorberTrait.ResetAbsorption(true);
+            }
+        }
+            
         //// REMOVE
         //if (Input.GetKeyDown(KeyCode.P))
         //{

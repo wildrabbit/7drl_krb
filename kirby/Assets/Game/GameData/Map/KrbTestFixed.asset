@@ -33,9 +33,19 @@ MonoBehaviour:
     Monster: {fileID: 11400000, guid: eb07b47b6fc06314f887cd60a2666635, type: 2}
     SpawnTags: []
     MinAmount: 1
-    MaxAmount: 2
+    MaxAmount: 1
     Scatter: 1
-    MaxRespawns: 2
+    MaxRespawns: 1
+    RespawnDelayTimeUnits: 7
+    ActivatesByDistance: 0
+    PlayerDistance: 0
+  - Coords: {x: 1, y: 8}
+    Monster: {fileID: 11400000, guid: dedf874dc3152464a9d33cc936a638b6, type: 2}
+    SpawnTags: []
+    MinAmount: 1
+    MaxAmount: 1
+    Scatter: 1
+    MaxRespawns: 0
     RespawnDelayTimeUnits: 7
     ActivatesByDistance: 0
     PlayerDistance: 0
@@ -45,3 +55,5 @@ MonoBehaviour:
   BlockSpawns:
   - BlockData: {fileID: 11400000, guid: ec33955968bdc744e861d99b7a726c67, type: 2}
     Coords: {x: 7, y: 7}
+  - BlockData: {fileID: 11400000, guid: 7effec790b175ab4599a0dde93d057c1, type: 2}
+    Coords: {x: 3, y: 5}

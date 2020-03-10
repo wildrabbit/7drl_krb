@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public interface IAbsorbingEntity: IEntity
 {
+    string[] Attributes { get; }
     AbsorberTrait AbsorberTrait { get; }
     
     bool CanAbsorb(IAbsorbableEntity entity);
-    void FinishAbsorption(bool manual);
+    void FinishAbsorption();
     void StartAbsorption(IAbsorbableEntity entity);
 }
 
@@ -31,47 +29,66 @@ public class AbsorberTrait
     AbsorberTraitData _data;
     float _elapsed;
     AbsorptionData _activeAbsorptionData;
+    KrbGameEvents.AbsorptionEvents _absorbEvents;
 
-    public void Init(IAbsorbingEntity owner, AbsorberTraitData data)
+    public void Init(IAbsorbingEntity owner, AbsorberTraitData data, KrbGameEvents.AbsorptionEvents absorbEvents)
     {
         _data = data;
         _activeAbsorptionData = _data.NoAbsorption;
         _owner = owner;
+        _absorbEvents = absorbEvents;
     }
 
     public void Tick(float units)
     {
-        if(IsAbsorbing)
+        if (IsAbsorbing)
         {
             _elapsed += units;
-            if(_elapsed >= _activeAbsorptionData.Duration)
+            if (_elapsed >= _activeAbsorptionData.Duration)
             {
-                _owner.FinishAbsorption(manual:false);
+                ResetAbsorption(manual:false);
             }
         }
     }
 
     public bool TryAbsorb(IAbsorbableEntity target)
     {
-        if(target.AbsorptionData == null || target.AbsorptionData == _data.NoAbsorption)
+        if (target.AbsorptionData == null || target.AbsorptionData == _data.NoAbsorption)
         {
+            _absorbEvents.SendAbsorbFailed(_owner, false);
             return false;
         }
 
-        if(target.CanBeAbsorbedBy(_owner))
+        if (!IsAbsorbing && target.CanBeAbsorbedBy(_owner))
         {
             _activeAbsorptionData = target.AbsorptionData;
             _owner.StartAbsorption(target);
             target.BeAbsorbed(_owner);
             _elapsed = 0.0f;
+
+            _absorbEvents.SendAbsorptionHappened(target, _owner, _owner.Attributes);
             return true;
+        }
+        if(IsAbsorbing)
+        {
+            _absorbEvents.SendAbsorbFailed(_owner, true);
         }
         return false;
     }
 
-    public void ResetAbsorption()
+    public void ResetAbsorption(bool manual)
     {
+        _owner.FinishAbsorption();
         _elapsed = -1.0f;
         _activeAbsorptionData = _data.NoAbsorption;
+        if(manual)
+        {
+            _absorbEvents.SendAbsorptionCancelled(_owner);
+        }
+        else
+        {
+            _absorbEvents.SendAbsorptionExpired(_owner);
+
+        }
     }
 }

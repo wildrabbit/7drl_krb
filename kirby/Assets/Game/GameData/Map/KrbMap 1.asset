@@ -16,6 +16,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: eca604e9addef2945b23cd57f3bc88e7, type: 2}
   - {fileID: 11400000, guid: 2a5db9a291141ca458e9f24bf3c2d4c6, type: 2}
   - {fileID: 11400000, guid: 83f11a25a717cdd4aaf64136b3a3db61, type: 2}
-  GenerationData: {fileID: 11400000, guid: 14e8043e71ffcee4799e21a73918321d, type: 2}
+  GenerationData: {fileID: 11400000, guid: bf7bd9ae1b74c214a9ff0b00ee55db86, type: 2}
   AllowDiagonals: 0
   DistanceStrategy: 0

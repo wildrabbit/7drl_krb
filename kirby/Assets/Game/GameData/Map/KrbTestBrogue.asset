@@ -1,0 +1,43 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1c9f00e62d3a4c24ebf67214c42d7b68, type: 3}
+  m_Name: KrbTestBrogue
+  m_EditorClassIdentifier: Assembly-CSharp-firstpass::Room7DRLGeneratorData
+  WallTile: 0
+  GroundTile: 1
+  NoTile: -1
+  OriginIsTopLeft: 0
+  _mapSize: {x: 30, y: 30}
+  NumRooms: 5
+  MaxRoomSize: 8
+  MinRoomSize: 2
+  RectMin: 2
+  RectMax: 4
+  CrossMin: 3
+  CrossMax: 4
+  StartCavernChance: 0.8
+  CaveMaxSize: 8
+  WallProbability: 0.4
+  Neighbours: 4
+  SquareChance: 0.2
+  XChance: 0.15
+  CustomChance: 0
+  CustomRooms: []
+  BuildAttempts: 500
+  PlaceAttempts: 20
+  MaxTunnelLength: 12
+  IncludeShortcuts: 1
+  ShortcutAttempts: 300
+  ShortcutLength: 5
+  MinPathfindingDistance: 50
+  IsSeeded: 1
+  Seed: ' {"s0":590660417,"s1":649591706,"s2":-1774536787,"s3":585217228}'

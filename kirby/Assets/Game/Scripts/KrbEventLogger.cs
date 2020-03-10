@@ -50,7 +50,13 @@ public class AbsorptionEvent : EventLogMessage
 
     public override string Message()
     {
-        return $"Monster {AbsorbedName} at {AbsorbedCoords} was absorbed by {AbsorberName} and Gained [{string.Join(",",Attributes)}]!\n";
+        string txt = $"Monster {AbsorbedName} at {AbsorbedCoords} was absorbed by {AbsorberName}";
+        if (Attributes.Length > 0)
+        {
+            txt += $"and Gained[{ string.Join(",", Attributes)}]!\n";
+        }
+        else txt += "\n";
+        return txt;
     }
 }
 
@@ -279,6 +285,7 @@ public class KrbEventLogger: GameEventLog
         ((KrbGameEvents)_gameEvents).Absorption.CanBeAbsorbed += AbsorptionReady;
         ((KrbGameEvents)_gameEvents).Absorption.WasAbsorbed += AbsorptionHappened;
         ((KrbGameEvents)_gameEvents).Absorption.AbsorptionExpired += AbsorptionExpired;
+        ((KrbGameEvents)_gameEvents).Absorption.AbsorbFailed += AbsorptionFailed;
     }
 
 
@@ -294,6 +301,7 @@ public class KrbEventLogger: GameEventLog
         ((KrbGameEvents)_gameEvents).Absorption.CanBeAbsorbed -= AbsorptionReady;
         ((KrbGameEvents)_gameEvents).Absorption.WasAbsorbed -= AbsorptionHappened;
         ((KrbGameEvents)_gameEvents).Absorption.AbsorptionExpired -= AbsorptionExpired;
+        ((KrbGameEvents)_gameEvents).Absorption.AbsorbFailed -= AbsorptionFailed;
     }
 
     private void PlayerIdle()
@@ -308,6 +316,18 @@ public class KrbEventLogger: GameEventLog
         PlayerActionEvent evt = CreateEvent<PlayerActionEvent>();
         evt.SetDead();
         AddEvent(evt);
+    }
+
+    public void AbsorptionFailed(IAbsorbingEntity absorber, bool alreadyAbsorbing)
+    {
+        SimpleMessage msg = CreateEvent<SimpleMessage>();
+        msg.Text = $"{absorber.Name} try to absorb entity but failed.";
+        if (alreadyAbsorbing)
+        {
+            msg.Text += $" It is already absorbing something else. Wait for it to dispel or press U\n";
+        }
+        else msg.Text += "\n";
+        AddEvent(msg);
     }
 
     public void AbsorptionReady(IAbsorbableEntity entity)

@@ -147,6 +147,18 @@ public class KrbMapController : MonoBehaviour, IMapController
 
             InitFromArray(context.GeneratorData.MapSize, level, context.PlayerStart, _mapData.GenerationData.OriginIsTopLeft);
         }
+
+        else if (_mapData.GenerationData.GeneratorType == GeneratorType.Room7DRL)
+        {
+            int[] level = null;
+            var context = new Room7DRLGeneratorContext{
+                GeneratorData = _mapData.GenerationData,
+                PlayerStart = Vector2Int.zero
+            };
+            IMapGenerator generator = new Room7DRLGenerator();
+            generator.GenerateMap(ref level, context);
+            InitFromArray(context.GeneratorData.MapSize, level, context.PlayerStart, _mapData.GenerationData.OriginIsTopLeft);
+        }
     }
 
     public void InitFromArray(Vector2Int dimensions, int[] typeArray, Vector2Int playerStart, bool arrayOriginTopLeft)
@@ -197,8 +209,8 @@ public class KrbMapController : MonoBehaviour, IMapController
 
     public void ConstrainCoords(ref Vector2Int playerCoords)
     {
-        playerCoords.x = Mathf.Clamp(playerCoords.x, 0, _mapView.size.x - 1);
-        playerCoords.y = Mathf.Clamp(playerCoords.y, 0, _mapView.size.y - 1);
+        //playerCoords.x = Mathf.Clamp(playerCoords.x, 0, _mapView.size.x - 1);
+        //playerCoords.y = Mathf.Clamp(playerCoords.y, 0, _mapView.size.y - 1);
     }
 
 

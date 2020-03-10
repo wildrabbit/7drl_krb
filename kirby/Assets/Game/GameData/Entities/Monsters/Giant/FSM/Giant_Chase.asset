@@ -1,0 +1,25 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31b4179ebc9d46a41a29c516a03d642b, type: 3}
+  m_Name: Giant_Chase
+  m_EditorClassIdentifier: 
+  Actions:
+  - {fileID: 11400000, guid: a2bba7693f8b38543a1249c133ffdec4, type: 2}
+  Transitions:
+  - Priority: 0
+    Condition: {fileID: 11400000, guid: d6c879d6562c6e04da74ee2da14410ed, type: 2}
+    SuccessState: {fileID: 11400000, guid: 8354354e7f4fb634bb145b15bf5a9ce8, type: 2}
+    FailState: {fileID: 11400000, guid: a02f06426780a554c9fbb747fec28d29, type: 2}
+  - Priority: 1
+    Condition: {fileID: 11400000, guid: 8b2ff18d4c356ef4d898a9d592ba585e, type: 2}
+    SuccessState: {fileID: 11400000, guid: 05d7cdcccc4e70f42bcfe210d4120459, type: 2}
+    FailState: {fileID: 11400000, guid: a02f06426780a554c9fbb747fec28d29, type: 2}

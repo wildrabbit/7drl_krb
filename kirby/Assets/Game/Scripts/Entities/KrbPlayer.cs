@@ -13,16 +13,15 @@ public class KrbPlayer: Player, IAbsorbingEntity
     BaseGameEvents _events;
 
     AbsorberTrait _absorberTrait;
-    KrbGameEvents.AbsorptionEvents _absorbEvents;
     BaseGameEvents _gameEvents;
 
     protected override void DoInit(BaseEntityDependencies deps)
     {
         base.DoInit(deps);
         _events = deps.GameEvents;
-        _absorbEvents = ((KrbGameEvents)deps.GameEvents).Absorption;
+        var absorbEvents = ((KrbGameEvents)deps.GameEvents).Absorption;
         _absorberTrait = new AbsorberTrait();
-        _absorberTrait.Init(this, ((KrbPlayerData)_entityData).AbsorberData);
+        _absorberTrait.Init(this, ((KrbPlayerData)_entityData).AbsorberData, absorbEvents);
         _gameEvents = deps.GameEvents;
     }
 
@@ -71,58 +70,50 @@ public class KrbPlayer: Player, IAbsorbingEntity
             _originalMoving = _movingTrait;
             _movingTrait = entity.AbsorptionData.MovingReplace.CreateRuntimeTrait();
         }
-
-        _absorbEvents.SendAbsorptionHappened(entity, this, attributes);
     }
 
     public bool CanAbsorb(IAbsorbableEntity entity)
     {
-        return false;
+        return entity.CanBeAbsorbedBy(this);
     }
 
-    public void FinishAbsorption(bool manual = false)
+    public void FinishAbsorption()
     {
         // Restore all the things!
-        if(_originalHP != null && _hpTrait != _originalHP)
+        if (_originalHP != null && _hpTrait != _originalHP)
         {
             _hpTrait = _originalHP;
             _originalHP = null;
         }
 
-        if(_originalMoving != null && _movingTrait != _originalMoving)
+        if (_originalMoving != null && _movingTrait != _originalMoving)
         {
             _movingTrait = _originalMoving;
             _originalMoving = null;
         }
 
-        if(_originalView != null && _view != _originalView)
+        if (_originalView != null && _view != _originalView)
         {
             GameObject.Destroy(_view);
-            
+
             _view = _originalView;
             _view.SetActive(true);
             _originalView = null;
         }
 
-        if(_absorptionDecorationView != null  && _absorptionDecorationView != null)
+        if (_absorptionDecorationView != null && _absorptionDecorationView != null)
         {
             GameObject.Destroy(_absorptionDecorationView);
             _absorptionDecorationView = null;
         }
 
-        if(_battleTrait != null && _battleTrait != _originalBattleTrait)
+        if (_battleTrait != null && _battleTrait != _originalBattleTrait)
         {
             _battleTrait = _originalBattleTrait;
             _originalBattleTrait = null;
         }
-
-        if(manual)
-        {
-            _absorbEvents.SendAbsorptionCancelled(this);
-        }
-        else
-        {
-            _absorbEvents.SendAbsorptionExpired(this);
-        }
     }
+
+
+        public override string[] Attributes => _battleTrait.FirstAttack.Attributes;
 }
