@@ -16,7 +16,9 @@ public class KrbTile : Tile
     public bool Walkable => _walkable;
     public bool Impassable => _impassable;
 
+#pragma warning disable 649
     [SerializeField] KrbTileType _tile;
     [SerializeField] bool _walkable;
     [SerializeField] bool _impassable;
+#pragma warning restore 649
 }

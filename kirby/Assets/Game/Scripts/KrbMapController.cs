@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Tilemaps;
@@ -8,8 +7,9 @@ using UnityEngine.Tilemaps;
 public class KrbMapController : MonoBehaviour, IMapController
 {
     public Vector2Int PlayerStart => _playerStart;
+#pragma warning disable 0649
     [SerializeField] Tilemap _mapView;
-
+#pragma warning restore 0649
 
     public BoundsInt CellBounds => _mapView.cellBounds;
 

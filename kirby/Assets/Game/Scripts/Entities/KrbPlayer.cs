@@ -25,9 +25,9 @@ public class KrbPlayer: Player, IAbsorbingEntity
         _gameEvents = deps.GameEvents;
     }
 
-    public override void AddTime(float timeUnits, ref int playState)
+    public override void AddTime(float timeUnits)
     {
-        base.AddTime(timeUnits, ref playState);
+        base.AddTime(timeUnits);
         _absorberTrait.Tick(timeUnits);
     }
 

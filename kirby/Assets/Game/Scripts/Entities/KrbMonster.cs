@@ -50,7 +50,9 @@ public class KrbMonster : Monster, IAbsorbableEntity
 
     private void OnHealthEvent(IHealthTrackingEntity entity, int delta, bool arg3, bool arg4, bool arg5)
     {
+#pragma warning disable CS0252 // Posible comparación de referencias involuntaria: El lado de la mano izquierda necesita conversión
         if (entity != this)
+#pragma warning restore CS0252 // Posible comparación de referencias involuntaria: El lado de la mano izquierda necesita conversión
         {
             return;
         }

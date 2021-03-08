@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class KrbGameController : GameController
 {
+#pragma warning disable 649
     [SerializeField] KrbMapController _mapControllerPrefab;
-   
+#pragma warning restore 649
+
     // Start is called before the first frame update
     override protected void Awake()
     {
@@ -57,7 +59,13 @@ public class KrbGameController : GameController
         return new KrbEventLogger();
     }
 
-    protected override void BuildTraps()
+    protected override void ExtendedPopulate()
+    {
+        BuildTraps();
+        BuildBlocks();
+    }
+
+    void BuildTraps()
     {
         var traps = ((KrbMapController)_mapController).TrapSpawns;
         foreach (var trapSpawn in traps)
@@ -66,7 +74,7 @@ public class KrbGameController : GameController
         }
     }
 
-    protected override void BuildBlocks()
+    void BuildBlocks()
     {
         var blocks = ((KrbMapController)_mapController).BlockSpawns;
         foreach (var block in blocks)
